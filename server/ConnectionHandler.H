@@ -45,9 +45,30 @@ public:
 
 private:
     void process();
-    void secure_connection(int connection);
     SSL_CTX *create_context();
     void configure_context(SSL_CTX *ctx);
+
+    EVP_PKEY *read_secret_key_from_file(const char *fname)
+    {
+        EVP_PKEY *key = NULL;
+        FILE *fp = fopen(fname, "r");
+        if (!fp)
+        {
+            std::cerr << "fopen " << fname << std::endl;
+            throw std::runtime_error("read_secret_key_from_file(fopen)");
+        }
+        
+        key = PEM_read_PrivateKey(fp, NULL, NULL, NULL);
+        if (!key)
+        {
+            fclose(fp);
+            std::cerr << "PEM_read_PrivateKey error for file " << fname << std::endl;
+            throw std::runtime_error("read_secret_key_from_file(PEM_read_PrivateKey)");
+        }
+
+        fclose(fp);
+        return key;
+    }
 
 private:
     ConnectionManager *_mgr;

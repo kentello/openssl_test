@@ -2,6 +2,7 @@
 
 #include <vector>
 #include <algorithm>
+#include <string>
 
 namespace TLSServerNS
 {
@@ -9,6 +10,15 @@ namespace TLSServerNS
 class MathOperationsManager
 {
 public:
+    std::string process(std::string command)
+    {
+        std::string result;
+        // TODO
+
+        
+        return result;
+    }
+private:
     double avg(const std::vector<double>& input)
     {
         // return 1.0 * std::accumulate(v.begin(), v.end(), 0LL) / v.size();
