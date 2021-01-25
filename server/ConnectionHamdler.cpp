@@ -6,6 +6,8 @@
 
 using namespace TLSServerNS;
 
+static const int read_bufer_size = 2048;
+
 void ConnectionHandler::process()
 {
     while (!_stop_token)
@@ -40,7 +42,7 @@ void ConnectionHandler::process()
             // читаем данные от клиента из сокета
             uint16_t read_bytes = 0;
             uint8_t read_bufer[2048];
-            const uint8_t read_bufer_size = 2048;
+            
             std::string read_str;
             do
             {
@@ -81,7 +83,7 @@ void ConnectionHandler::process()
                 throw std::runtime_error("EVP_DigestSignFinal(nullptr) error");
             }
 
-            if (!(*sig = (unsigned char *)OPENSSL_malloc(sizeof(unsigned char) * (*slen))))
+            if (!(*sig = (unsigned char *)OPENSSL_malloc(sizeof(unsigned char) * (slen))))
             {
                 ERR_print_errors_fp(stderr);
                 throw std::runtime_error("OPENSSL_malloc() error");
