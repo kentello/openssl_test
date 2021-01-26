@@ -18,6 +18,7 @@ int main(int argc, char** argv)
     catch (const std::exception &e)
     {
         std::cerr << "Conversion error: " << e.what() << std::endl;
+        return 1;
     }
 
     TLSServerNS::ConnectionManager cMgr;

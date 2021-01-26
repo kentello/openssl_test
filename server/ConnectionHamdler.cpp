@@ -63,7 +63,7 @@ void ConnectionHandler::process()
                 throw std::runtime_error("EVP_MD_CTX_create error");
             }
 
-            EVP_PKEY * key = read_secret_key_from_file("key.pem");
+            EVP_PKEY * key = read_secret_key_from_file("key_sign.pem");
             if (1 != EVP_DigestSignInit(mdctx, NULL, EVP_ecdsa(), NULL, key))
             {
                 ERR_print_errors_fp(stderr);
